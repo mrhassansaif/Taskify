@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-        Taskify the TaskMaster: A robust and user-friendly TODO app built with React.
+        <b>Taskify the TaskMaster:</b> A robust and user-friendly TODO app built with React.
         </p>
       </header>
     </div>
