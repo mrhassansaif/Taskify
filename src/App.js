@@ -1,13 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import SignUp from './Components/Auth/SignUp';
-import Todo from './Components/Todo/Todo';
+import logo from "./logo.svg";
+import "./App.css";
+import SignUp from "./Components/Auth/SignUp";
+import Todo from "./Components/Todo/Todo";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <>
-    {/* <SignUp/> */}
-    <Todo/>
+      <BrowserRouter>
+        <Routes>
+          {/* <Route path="/" element={<SignUp />} /> */}
+          <Route path="/" element={<Todo />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

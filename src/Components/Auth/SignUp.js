@@ -4,10 +4,15 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "../FirebaseConfig/FirebaseConfig.js";
+
 import "./SignUp.css";
+import { Link } from "react-router-dom";
+import Todo from "../Todo/Todo.js";
+
 
 function SignUpForm() {
   const [isSignUp, setIsSignUp] = useState(false);
+  
 
   const handleToggleSignUp = () => {
     setIsSignUp(!isSignUp);
@@ -46,6 +51,7 @@ function SignUpForm() {
         // Signed in
         const user = userCredential.user;
         console.log(user)
+        
         // ...
       })
       .catch((error) => {
@@ -71,6 +77,7 @@ function SignUpForm() {
           Sign In
         </button>
       </div>
+      
       <div className="sub-cont">
         <div className="img">
           <div className="img__text m--up">
