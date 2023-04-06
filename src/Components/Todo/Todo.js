@@ -1,10 +1,30 @@
-import React from 'react'
+import React, { useState } from "react";
 import "./Todo.css"
+import { getAuth, auth, onAuthStateChanged, doc, getDoc, db, updateDoc } from '.././FirebaseConfig/FirebaseConfig'
 
 
 
 
 export default function Todo() {
+  const [data, setdata] = useState()
+
+  let snapData;
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const ref = doc(db, "Users", user.uid);
+      const docSnap = getDoc(ref)
+        .then((snapshot) => {
+          snapData = snapshot.data()
+          console.log(snapData.name)
+          const uid = user.uid
+          console.log(uid)
+          setdata(snapData.name)
+        })
+     } else {
+       console.log("error");
+    }
+  });
   return (
     <>
     <section class="vh-100">
@@ -17,7 +37,7 @@ export default function Todo() {
 
             <p class="h1 text-center mt-3 mb-4 pb-3 text-primary">
               <i class="fas fa-check-square me-1"></i>
-              <u> Taskify</u>
+              <u> Welcome Taskify Mr. {data}</u>
             </p>
 
             <div class="pb-2">

@@ -3,7 +3,10 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  db, doc, setDoc,
 } from "../FirebaseConfig/FirebaseConfig.js";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./SignUp.css";
 import { Link, Navigate } from "react-router-dom";
@@ -27,17 +30,28 @@ function SignUpForm() {
 
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, Semail, Spassword)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         // Signed in
         const user = userCredential.user;
         console.log("Done signing", user);
+        toast.success('Sign in successful!', { position: toast.POSITION.BOTTOM_LEFT });
+        toast.success('You will be redirected to login', { position: toast.POSITION.BOTTOM_LEFT });
+        await setDoc(doc(db, "Users", user.uid), {
+          name: Sname,
+          email: Semail,
+          password: Spassword
+        });
         // ...
+        
+        setIsSignUp(!isSignUp);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage, errorCode, errorMessage);
         // ..
+        toast.error(error.message, { position: toast.POSITION.BOTTOM_LEFT });
+
       });
   }
 
@@ -52,20 +66,23 @@ function SignUpForm() {
         // Signed in
         const user = userCredential.user;
         console.log(user)
+        
+        toast.success('Log In successful!', { position: toast.POSITION.BOTTOM_LEFT });
         setValidate(true)
-
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage, errorCode)
+        toast.error(error.message, { position: toast.POSITION.BOTTOM_LEFT });
+
       });
   }
 
   return (
     <>
-
+    <ToastContainer />
       {Validate ? (<Navigate to="/todo" />) : (<div className={`cont ${isSignUp ? "s--signup" : ""}`}>
         <div className="form sign-in">
           <h2>Welcome back,</h2>
