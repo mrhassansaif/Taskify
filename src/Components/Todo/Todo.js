@@ -8,6 +8,7 @@ import {
   getDoc,
   db,
   updateDoc,
+  signOut
 } from ".././FirebaseConfig/FirebaseConfig";
 
 export default function Todo() {
@@ -38,10 +39,10 @@ export default function Todo() {
 
   const get_update = () => {
     const currentDate = new Date(); // get the current date
-  const todoObject = { date: currentDate, value: todos };
+    const todoObject = { date: currentDate, value: todos };
     setNewTodo((prevTodo) => {
       return [...prevTodo, todoObject];
-      
+
     });
     console.log(todos)
     setTodos(" ");
@@ -55,6 +56,18 @@ export default function Todo() {
       });
     });
   };
+
+  // SIGN OUT
+  const LogOutUser = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      window.location = '/'
+    }).catch((error) => {
+      // An error happened.
+      console.log(error)
+    });
+
+  }
   return (
     <>
       <section class="vh-100">
@@ -70,14 +83,14 @@ export default function Todo() {
                   <p class="h1 text-center mt-3 mb-4 pb-3 text-primary">
                     <u> Welcome Taskify Mr. {data}</u>
                     <a
-                          href="#!"
-                          class="text-danger"
-                          data-mdb-toggle="tooltip"
-                          title="Delete todo"
-                        
-                        >
-                          <i class="fas fa-trash-alt"></i>
-                        </a>
+                      href="#!"
+                      class="text-danger"
+                      data-mdb-toggle="tooltip"
+                      title="Delete todo"
+
+                    >
+                      <i class="fas fa-sign-out-alt" style={{ marginLeft: "13%" }} onClick={LogOutUser}></i>
+                    </a>
                   </p>
 
                   <div class="pb-2">
@@ -139,21 +152,21 @@ export default function Todo() {
 
                   {newTodo.map((item, index) => {
                     return (<ul class="list-group list-group-horizontal rounded-0 bg-transparent">
-                    <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
-                      <div class="form-check">
-                      <p class="lead fw-normal mb-0">
-                        {index + 1}
-                      </p>
-                      </div>
-                    </li>
-                    <li class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                      <p class="lead fw-normal mb-0">
-                        {item.value}
-                      </p>
-                    </li>
-                    <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
-                      <div class="d-flex flex-row justify-content-end mb-1">
-                        {/* <a
+                      <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
+                        <div class="form-check">
+                          <p class="lead fw-normal mb-0">
+                            {index + 1}
+                          </p>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
+                        <p class="lead fw-normal mb-0">
+                          {item.value}
+                        </p>
+                      </li>
+                      <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
+                        <div class="d-flex flex-row justify-content-end mb-1">
+                          {/* <a
                           href="#!"
                           class="text-info"
                           data-mdb-toggle="tooltip"
@@ -161,30 +174,30 @@ export default function Todo() {
                         >
                           <i class="fas fa-pencil-alt me-3"></i>
                         </a> */}
-                        <a
-                          href="#!"
-                          class="text-danger"
-                          data-mdb-toggle="tooltip"
-                          title="Delete todo"
-                          onClick={() => deleteTodo(index)}
-                        >
-                          <i class="fas fa-trash-alt"></i>
-                        </a>
-                      </div>
-                      <div class="text-end text-muted">
-                        <a
-                          href="#!"
-                          class="text-muted"
-                          data-mdb-toggle="tooltip"
-                          title="Created date"
-                        >
-                          <p class="small mb-0">
-                            <i class="fas fa-info-circle me-2"></i>{item.date.toLocaleString()}
-                          </p>
-                        </a>
-                      </div>
-                    </li>
-                  </ul> );
+                          <a
+                            href="#!"
+                            class="text-danger"
+                            data-mdb-toggle="tooltip"
+                            title="Delete todo"
+                            onClick={() => deleteTodo(index)}
+                          >
+                            <i class="fas fa-trash-alt"></i>
+                          </a>
+                        </div>
+                        <div class="text-end text-muted">
+                          <a
+                            href="#!"
+                            class="text-muted"
+                            data-mdb-toggle="tooltip"
+                            title="Created date"
+                          >
+                            <p class="small mb-0">
+                              <i class="fas fa-info-circle me-2"></i>{item.date.toLocaleString()}
+                            </p>
+                          </a>
+                        </div>
+                      </li>
+                    </ul>);
                   })}
                 </div>
               </div>
